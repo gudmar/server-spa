@@ -1,0 +1,13 @@
+- var definedTitle = title || 'no name'
+- var definedStyleFilePaths = styles || []
+- var definedScriptPaths = scripts || []
+
+html 
+    head
+        title #{definedTitle}
+        each styleFileName in definedStyleFilePaths
+            link(rel="stylesheet" type="text/css" href=styleFileName)
+        each scriptPath in definedScriptPaths
+            script(src=scriptPath)
+    body
+        block content

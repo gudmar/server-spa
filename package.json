@@ -1,0 +1,26 @@
+{
+  "name": "spaserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "ui": "browser-sync start --config bs-config.js"
+  },
+  "author": "Marek Gudalewicz",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.3",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "pug": "^3.0.3"
+  },
+  "devDependencies": {
+    "browser-sync": "^3.0.3",
+    "nodemon": "^3.1.9"
+  },
+  "type": "module"
+}

@@ -1,0 +1,32 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    background-color: black;
+    color: white;
+    font-size: 2rem;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.home-link {
+    display: flex;
+    gap: 1rem;
+}
+
+.home-link img {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-left: 1rem;
+    top: 0.5rem;
+    position: relative;
+}
+
+a:link{ color: yellow; text-decoration: none; }
+a:hover{ color: yellow; text-decoration: none; }
+a:visited{ color: yellow; text-decoration: none; }
