@@ -6,8 +6,15 @@ const fetchScriptsIfNeeded = async (element) => {
     return scripts
 }
 
+const fetchStylesIfNeeded = async (element) => {
+    const fileNames = element.getAttribute('data-styles');
+    if (!fileNames) return[];
+    const fileNamesArray = fileNames.split('|');
+    const files = await fetchStyles(fileNamesArray);
+    return files
+}
+
 const placeScriptsInHeadSection = (scripts) => {
-    // const head = document.getElementsByTagName('head')[0]
     scripts.forEach((script) => {
         const scriptNode = document.createElement("script");
         scriptNode.text = script
@@ -17,9 +24,30 @@ const placeScriptsInHeadSection = (scripts) => {
     })
 }
 
+const placeStylesInHeadSection = (styles) => {
+    styles.forEach((style) => {
+        const styleNode = document.createElement("style")
+        style.innerHTML = style
+        console.dir(styleNode)
+        document.head.appendChild(styleNode);
+    })
+}
+
 const loadScripts = async (element) => {
     const scriptContent = await fetchScriptsIfNeeded(element);
     placeScriptsInHeadSection(scriptContent);
+}
+const loadStyles = async (element) => {
+    const fileNames = element.getAttribute('data-styles').split('|');
+    console.log(fileNames)
+    if (!fileNames?.length) return;
+    fileNames.forEach((name) => {
+        const link = document.createElement('link');
+        link.type = 'text/css';
+        link.rel = 'stylesheet';
+        link.href = name
+        document.head.appendChild(link)
+    })
 }
 
 const fetchScripts = async (scriptNames) => {
@@ -36,20 +64,32 @@ const fetchScripts = async (scriptNames) => {
     return scripts
 }
 
+const fetchStyles = async (scriptNames) => {
+    if (!scriptNames) return;
+    const res = scriptNames.map((name) => fetch(getUrl(name), {
+        headers: {
+            "Content-Type": 'text/css',
+        }
+    })) 
+    const responses = await Promise.all(res)
+    const promisses = responses.map((res) => getBody(res));
+    const content = await Promise.all(promisses);
+    console.log(content)
+    return content
+}
+
+
 const bindNavigations = (renderer) => {
     options = document.querySelectorAll('[data-role="nav-item"]')
     console.log(options)
     for (let option of options) {
         const endpoint = option.getAttribute('data-endpoint')
         option.addEventListener('click', async () => {
-            // const scripts = await fetchScriptsIfNeeded(option)
-            // console.log(scripts)
             await loadScripts(option)
+            await loadStyles(option)
             const result = await fetch(getUrl(endpoint));
             const messageBody = await getBody(result)
             renderer.replaceContent(messageBody, endpoint)
-            console.log(messageBody)
-            console.log(result)
         })
     }
 }

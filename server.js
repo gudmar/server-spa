@@ -28,11 +28,11 @@ server.get('/login', async (req, res) => {
     res.send(html)
 })
 server.get('/clock', async (req, res) => {
-    console.log('In clock', req.method, req.path)
+    const time = new Date(Date.now())
     const locals = {
-        hours: '1',
-        minutes: '2',
-        seconds: '3',
+        hours:   `${time.getHours()}`,
+        minutes: `${time.getMinutes()}`,
+        seconds: `${time.getSeconds()}`,
     }
     const getHtml = await pug.compileFile('./pages/templates/clock.pug')
     res.send(getHtml(locals))

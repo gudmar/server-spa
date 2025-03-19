@@ -1,0 +1,13 @@
+.digital-clock-wrapper {
+    width: 90%;
+    font-size: 3rem;
+}
+
+.digital-clock-display-segment {
+    display: inline;
+}
+
+.digital-clock-separator {
+    display: inline-block;
+    margin: 0.5rem;
+}

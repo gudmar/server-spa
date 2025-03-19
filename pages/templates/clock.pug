@@ -1,27 +1,9 @@
-//- mixin digitalClock(hours, minutes, seconds)
-    .digital-clock-wrapper
-        .digital-clock-container
-            div(class='digital-clock-display-segment digital-clock-hours') #{hours}
-            div.digital-clock-separator :
-            div(class='digital-clock-display-segment digital-clock-minutes') #{minutes}
-            div.digital-clock-separator :
-            div(class='digital-clock-display-segment digital-clock-seconds') #{seconds}
-    script
-        include ../../scripts/clock/clock.js
-
 
 .digital-clock-wrapper
     .digital-clock-container
-    //- div(class='digital-clock-display-segment digital-clock-hours') #{hours}
     div(class='digital-clock-display-segment digital-clock-hours') #{`${hours.padStart(2, "0")}`}
     div.digital-clock-separator :
-    //- div(class='digital-clock-display-segment digital-clock-minutes') #{minutes}
     div(class='digital-clock-display-segment digital-clock-minutes') #{`${minutes.padStart(2, "0")}`}
     div.digital-clock-separator :
     div(class='digital-clock-display-segment digital-clock-seconds') #{`${seconds.padStart(2, "0")}`}
-        //- div(class='digital-clock-display-segment digital-clock-seconds') #{seconds}
-script
-    include ../../scripts/clock/clock.js
-
-//- +digitalClock(hours, minutes, seconds)
             
