@@ -1,0 +1,31 @@
+.nav {
+    list-style-type: none;
+    position: relative;
+    cursor: pointer;
+}
+
+.nav-item:hover {
+    color: #ffffaa;
+    font-weight: bold;
+}
+
+.nav-item:hover::after {
+    content: '*'
+}
+
+.nav-item:active{
+    color: #ffff88;
+    margin-top: 1rem;
+    transform: translate(1rem);
+    transition-duration: 300ms;
+    overflow: visible;
+}
+
+.nav-item {
+    position: relative;
+    transition-duration: 300ms;
+    color: white;
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    /* font-weight: bold; */
+}

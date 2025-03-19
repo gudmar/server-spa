@@ -1,3 +1,24 @@
+const validRoutes = [
+    'login', 'clock', 'stoper', 'logout'
+]
+
+const query = async(hashPath) => {
+    const path = hashPath.split('#')[1]
+    if (validRoutes.includes(path)) {
+        const response = await makeRequest({
+            method: 'GET',
+            route: path
+        })
+        return response
+    } else {
+        makeRequest({
+            method: 'GET',
+            route: 'error'
+        })
+    }
+        
+}
+
 const router = () => {
     console.log('Router launch')
     window.onhashchange = (e) => {

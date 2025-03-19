@@ -7,8 +7,10 @@
     font-family: Arial, Helvetica, sans-serif;
     display: grid;
     grid-template: 
-        "title title" auto
-        "navigation content" 5fr / 1r 3fr
+        'title title'
+        'navigation content';
+    grid-template-columns: 1.5fr 5fr;
+    grid-template-rows: 1fr 5fr;
 }
 
 .title {
@@ -23,7 +25,7 @@
 }
 
 .navigation {
-    grid-area: navitation;
+    grid-area: navigation;
     overflow: auto;
     display: flex;
     flex-direction: column;
@@ -32,4 +34,7 @@
 .content {
     grid-area: content;
     display: flex;
+    padding: 2rem;
+    line-height: 1.75rem;
+    font-size: 1.2rem;
 }
