@@ -4,7 +4,10 @@ export const NAVIGATION = [
         endpoint: 'clock',
         scripts: [
             'clock/clock.js'
-        ]  
+        ],
+        styles: [
+            'clock/clock.css'
+        ]
     },
     {
         caption: 'Stop watch',
