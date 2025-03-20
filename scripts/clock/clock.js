@@ -50,4 +50,4 @@ const updateTime = () => {
 const startClock = () => setInterval(updateTime, 1000)
 startClock();
 // startClock();
-window.onload = startClock
+// window.onload = startClock

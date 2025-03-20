@@ -11,7 +11,14 @@ export const NAVIGATION = [
     },
     {
         caption: 'Stop watch',
-        endpoint: 'stop-watch'
+        endpoint: 'stop-watch',
+        scripts: [
+            '/stopWatch/stopWatch.js'
+        ],
+        styles: [
+            'clock/clock.css',
+            'stopWatch/stopWatch.css'
+        ]
     },
     {
         caption: 'Login',

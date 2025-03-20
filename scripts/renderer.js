@@ -1,7 +1,7 @@
 const LOCATIONS = {
     'clock': '#content',
     'login': '#content',
-    'stoper': '#content',
+    'stop-watch': '#content',
 }
 
 class Renderer {

@@ -1,0 +1,2 @@
+mixin button(label, classes, action=() => {})
+    div(class=`button ${classes.join(' ')}`, onclick=action) #{label}
