@@ -1,5 +1,5 @@
 const validRoutes = [
-    'login', 'clock', 'stoper', 'logout'
+    'login', 'clock', 'stop-watch', 'logout'
 ]
 
 const query = async(hashPath) => {

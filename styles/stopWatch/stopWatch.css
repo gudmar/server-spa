@@ -1,0 +1,14 @@
+.stop-watch-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    align-content: center;
+}
+
+.stop-watch-keypad-container {
+    display: flex;
+    gap: 0.5rem;
+}

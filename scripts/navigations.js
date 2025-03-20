@@ -85,11 +85,11 @@ const bindNavigations = (renderer) => {
     for (let option of options) {
         const endpoint = option.getAttribute('data-endpoint')
         option.addEventListener('click', async () => {
-            await loadScripts(option)
             await loadStyles(option)
             const result = await fetch(getUrl(endpoint));
             const messageBody = await getBody(result)
             renderer.replaceContent(messageBody, endpoint)
+            await loadScripts(option)
         })
     }
 }

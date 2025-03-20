@@ -38,8 +38,15 @@ server.get('/clock', async (req, res) => {
     res.send(getHtml(locals))
 })
 
-server.get('stoper', (req, res) => {
-    res.send()
+server.get('/stop-watch', async (req, res) => {
+    const locals = {
+        hours: '0',
+        minutes: '0',
+        seconds: '0',
+        hundreds: '0',
+    }
+    const getHtml = await pug.compileFile('./pages/templates/stopWatch.pug')
+    res.send(getHtml(locals))
 })
 server.get('logout', (req, res) => {
     res.send()
