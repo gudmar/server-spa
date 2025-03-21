@@ -58,6 +58,7 @@ server.get('/', (req, res) => {
         navigations: NAVIGATION,
         scripts: [
             'renderer.js',
+            'load.js',
             'getBody.js',
             'utils.js',
             'router.js',

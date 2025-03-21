@@ -20,6 +20,4 @@ class Renderer {
         const elements = Renderer.domParser.parseFromString(html, 'text/html');
         return elements.childNodes[0]
     }
-
-
 }

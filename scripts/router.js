@@ -2,6 +2,7 @@ const validRoutes = [
     'login', 'clock', 'stop-watch', 'logout'
 ]
 
+
 const query = async(hashPath) => {
     const path = hashPath.split('#')[1]
     if (validRoutes.includes(path)) {
