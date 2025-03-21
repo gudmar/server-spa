@@ -54,3 +54,15 @@
     background-color: #aaaaff;
     color: black;
 }
+
+.button.disabled {
+    background-color: #999999;
+    color: #bbbbbb;
+    cursor: default;
+}
+
+/* .button.disabled:hover {
+    background-color: #999999;
+    color: #bbbbbb;
+} */
+
