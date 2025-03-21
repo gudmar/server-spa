@@ -3,7 +3,7 @@ const MS_IN_SECOND = 1000;
 const SEDONDS_IN_MINUTE = 60;
 const MINUTES_IN_HOUR = 60;
 const HUNDREDS_IN_MS = 10;
-const TICK = 50;
+const TICK = 15;
 
 const getArray = (size) => Array(size).fill(null).map(i => null)
 
@@ -38,6 +38,8 @@ class StopWatch {
         this.placeholders = getArray(4);
         this.setPlaceholders();
         this.currentTime = 0
+        this.isPaused = false;
+        this.isNoRun = true;
     }
 
     static splitTime(timeIn_ms) {
@@ -52,37 +54,25 @@ class StopWatch {
 
     static verifyDimention(arr1, arr2) {
         if (!arr1?.length || !arr2?.length || arr1.length !== arr2.length) {
-            throw new Error('arr1 or arr2 of wrong type')
+            throw new Error(`arr1 or arr2 of wrong type: arg1.length = [${arr1?.length}], arr2.length = [${arr2?.length}], arr1 = [${arr1}], arr2 = [${arr2}]`)
         }
-    }
-
-    static getChangedMask(separatedTimeA, separatedTimeB) {
-        StopWatch.verifyDimention(separatedTimeA, separatedTimeB)
-        const mask = separatedTimeA.map((item, index) => separatedTimeB[index] - item === 0 ? 0 : 1)
-        return mask;
-    }
-
-    static mask(arr, mask) {
-        StopWatch.verifyDimention(arr, mask);
-        const result = arr.map((item, index) => mask[index] * item)
-        return result
     }
 
     updateDom(changesInTime) {
         StopWatch.verifyDimention(changesInTime, this.placeholders)
-        changesInTime.forEach((change, index) => {
-            if (change === 0) return
-            this.placeholders[index].innerText = change
-        })
+        changesInTime.forEach(((change, index) => {
+            const pad = index === this.placeholders.length - 1 ? 3 : 2
+            const newValue = `${change}`.padStart(pad, "0")
+            const currentValue = this.placeholders[index];
+            if (newValue === currentValue) return;
+            this.placeholders[index].innerText = newValue
+        }).bind(this))
     }
 
     setTime(time) {
         const delta = time - this.currentTime;
-        const splittedCurrentTime = StopWatch.splitTime(delta);
         const splittedDelta = StopWatch.splitTime(delta);
-        const changeMask = StopWatch.getChangedMask(splittedCurrentTime, splittedDelta);
-        const changesInTime = StopWatch.mask(splittedDelta, changeMask);
-        this.updateDom(changesInTime)
+        this.updateDom(splittedDelta)
     }
 
     updateTime() {
@@ -91,28 +81,37 @@ class StopWatch {
     }
 
     tick() {
-        console.log('tick')
-        const update = (() => {this.updateDom}).bind(this)
+        const update = (() => {this.updateTime()}).bind(this)
         this._interval = setInterval(update, TICK)
     }
 
-    run() { this.tick() }
+    run() { 
+        this.isPaused = false;
+        this.isNoRun = false;
+        this._currentTime = Date.now();
+        this.tick() 
+    }
 
-    pause() { console.log('pause'); clearInterval(this._interval) }
+    pause() { this.isPaused = true; clearInterval(this._interval) }
 
-    resume() { console.log('resume'); this.tick() }
+    resume() { 
+        if (!this.isPaused) return;
+        this.isPaused = false;
+        this.tick() 
+    }
 
     stop() {
-        console.log('Stop')
+        this.isPaused = false;
+        this.isNoRun = true;
         clearInterval(this._interval);
-        this.setTime(0)
-        this._currentTime = 0;
+        this._currentTime = Date.now();
+        this.setTime(Date.now())
+        this._currentTime = Date.now();
     }
 
     clear() {
-        console.log('Clear')
-        this.setTime(0)
-        this._currentTime = 0;
+        this.isPaused = false;
+        this._currentTime = Date.now();
     }    
 }
 
@@ -133,10 +132,53 @@ class StopWatchWithControls extends StopWatch {
 
     buttons = Array(StopWatchWithControls.length).fill(null).map(v => null);
 
+    static get pauseButton() {
+        return document.querySelector(StopWatchWithControls.controls[1])
+    }
+
+    static get resumeButton() {
+        return document.querySelector(StopWatchWithControls.controls[2])
+    }
+
+    static enablePause() {
+        StopWatchWithControls.pauseButton.classList.remove('disabled')
+    }
+    static disablePause() {
+        StopWatchWithControls.pauseButton.classList.add('disabled')
+    }
+
+    static enableResume() {
+        StopWatchWithControls.resumeButton.classList.remove('disabled')
+    }
+    static disableResume() {
+        StopWatchWithControls.resumeButton.classList.add('disabled')
+    }
+    disableResumeAndPause() {
+        StopWatchWithControls.disablePause()
+        StopWatchWithControls.disableResume()
+    }
+
+    disablePauseEnableResume() {
+        StopWatchWithControls.disablePause()
+        StopWatchWithControls.enableResume()
+    }
+
+    enablePauseDisableResume() {
+        StopWatchWithControls.enablePause()
+        StopWatchWithControls.disableResume();
+    }
+
+    handleButtonsOnPause() {
+        if (this.isNoRun) this.disableResumeAndPause();
+        else if (this.isPaused) this.disablePauseEnableResume()
+        else this.enablePauseDisableResume();
+    }
+
     constructor() {
         super();
         this.setButtons();
         this.setActions();
+        this.handleButtonsOnPause()
     }
 
     setButtons() {
@@ -145,13 +187,21 @@ class StopWatchWithControls extends StopWatch {
             this.buttons[index] = document.querySelector(selector)
         }).bind(this))
     }
+
+    wrapWithHandlePaused(fn) {
+        fn.call(this)
+        this.handleButtonsOnPause()
+    }
+
     setActions() {
         const actions = [
-            this.run.bind(this),
-            this.pause.bind(this),
-            this.resume.bind(this),
-            this.stop.bind(this),
-            this.clear.bind(this)
+            this.wrapWithHandlePaused.bind(this, this.run),
+            this.wrapWithHandlePaused.bind(this, this.pause),
+            this.wrapWithHandlePaused.bind(this, this.resume),
+            // this.pause.bind(this),
+            // this.resume.bind(this),
+            this.wrapWithHandlePaused.bind(this, this.stop),
+            this.wrapWithHandlePaused.bind(this, this.clear)
         ];
         console.log(this)
         this.buttons.forEach((button, index) => {
