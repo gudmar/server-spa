@@ -38,10 +38,7 @@ const loadScripts = async (element) => {
 }
 
 const loadStyles = async (fileNames) => {
-    // const fileNames = element.getAttribute('data-styles').split('|');
-    // console.log(fileNames)
     if (!(fileNames?.length)) return;
-    console.log(fileNames)
     fileNames.forEach((name) => {
         const link = document.createElement('link');
         link.type = 'text/css';

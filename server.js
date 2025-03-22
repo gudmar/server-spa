@@ -5,6 +5,7 @@ import { getError } from './getError.js';
 import { compileFile } from 'pug'
 import { NAVIGATION } from "./navigation.js";
 import pug from 'pug'
+import { getApp } from "./getApp.js";
 
 dotenv.config({path: '.env'})
 
@@ -21,13 +22,7 @@ server.use(express.static('styles'));
 server.use(express.static('scripts'));
 server.use(express.static('public'));
 
-server.get('/error', getError)
-server.get('/login', async (req, res) => {
-    const html = await compileFile('./pages/templates/login.pug')()
-    console.log(html)
-    res.send(html)
-})
-server.get('/clock', async (req, res) => {
+server.get('/api/clock', async (req, res) => {
     const time = new Date(Date.now())
     const locals = {
         hours:   `${time.getHours()}`,
@@ -38,7 +33,7 @@ server.get('/clock', async (req, res) => {
     res.send(getHtml(locals))
 })
 
-server.get('/stop-watch', async (req, res) => {
+server.get('/api/stop-watch', async (req, res) => {
     const locals = {
         hours: '0',
         minutes: '0',
@@ -48,15 +43,24 @@ server.get('/stop-watch', async (req, res) => {
     const getHtml = await pug.compileFile('./pages/templates/stopWatch.pug')
     res.send(getHtml(locals))
 })
+
+server.get('*', getApp)
+
+server.get('/error', getError)
+server.get('/login', async (req, res) => {
+    const html = await compileFile('./pages/templates/login.pug')()
+    console.log(html)
+    res.send(html)
+})
 server.get('logout', (req, res) => {
     res.send()
 })
 server.get('/', (req, res) => {
-    console.log('In / ', req.method, req.path)
     const locals = {
         title: 'SPA',
         navigations: NAVIGATION,
         scripts: [
+            'grimReaper.js',
             'renderer.js',
             'load.js',
             'getBody.js',

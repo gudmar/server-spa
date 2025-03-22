@@ -1,7 +1,7 @@
 const LOCATIONS = {
-    'clock': '#content',
-    'login': '#content',
-    'stop-watch': '#content',
+    'api/clock': '#content',
+    'api/login': '#content',
+    'api/stop-watch': '#content',
 }
 
 class Renderer {
@@ -12,7 +12,6 @@ class Renderer {
         // const element = Renderer.htmlStringToElement(html);
         const selector = LOCATIONS[endpoint];
         const location = document.querySelector(selector);
-        console.log(location)
         location.innerHTML = html;
     }
 
