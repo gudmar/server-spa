@@ -1,7 +1,7 @@
 export const NAVIGATION = [
     {
         caption: 'Clock',
-        endpoint: 'clock',
+        endpoint: 'api/clock',
         scripts: [
             'clock/clock.js'
         ],
@@ -11,7 +11,7 @@ export const NAVIGATION = [
     },
     {
         caption: 'Stop watch',
-        endpoint: 'stop-watch',
+        endpoint: 'api/stop-watch',
         scripts: [
             '/stopWatch/stopWatch.js'
         ],

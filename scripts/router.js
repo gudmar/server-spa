@@ -28,6 +28,13 @@ const router = () => {
     }
 }
 
+const updateHash = (apiEntpoint) => {
+    const notApiArr = apiEntpoint.split('/');
+    notApiArr.splice(0, 1);
+    const notApiPart = notApiArr.join('/');
+    window.location.hash = notApiPart;
+}
+
 const bind = () => {
     router()
 }

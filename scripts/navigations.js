@@ -86,6 +86,9 @@ const bindNavigations = (renderer) => {
         const styles =  option.getAttribute('data-styles').split('|');
         const scripts = option.getAttribute('data-scripts').split('|');
         option.addEventListener('click', () => {
+            const reaper = new GrimReaper();
+            reaper.doHarvest();
+            updateHash(endpoint)
             return load({ endpoint, styles, scripts, renderer })
             // await loadStyles(option)
             // const result = await fetch(getUrl(endpoint));
