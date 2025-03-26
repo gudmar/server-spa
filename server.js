@@ -44,37 +44,43 @@ server.get('/api/stop-watch', async (req, res) => {
     res.send(getHtml(locals))
 })
 
-server.get('*', getApp)
-
-server.get('/error', getError)
-server.get('/login', async (req, res) => {
+server.get('/api/login', async (req, res) => {
     const html = await compileFile('./pages/templates/login.pug')()
     console.log(html)
     res.send(html)
 })
+
+server.get('/', getApp );
+
+server.get('*', getApp)
+server.get('*', getError)
+
+server.get('/error', getError)
 server.get('logout', (req, res) => {
     res.send()
 })
-server.get('/', (req, res) => {
-    const locals = {
-        title: 'SPA',
-        navigations: NAVIGATION,
-        scripts: [
-            'grimReaper.js',
-            'renderer.js',
-            'load.js',
-            'getBody.js',
-            'utils.js',
-            'router.js',
-            'navigations.js'
-        ],
-        styles: [
-            'main.css',
-            'navigations.css'
-        ],
-    }
-    res.render('./pages/templates/indexWithNavTemplate.pug', locals)
-});
+
 server.get('*', getError)
+
+// server.get('/', (req, res) => {
+//     const locals = {
+//         title: 'SPA',
+//         navigations: NAVIGATION,
+//         scripts: [
+//             'grimReaper.js',
+//             'renderer.js',
+//             'load.js',
+//             'getBody.js',
+//             'utils.js',
+//             'router.js',
+//             // 'navigations.js'
+//         ],
+//         styles: [
+//             'main.css',
+//             'navigations.css'
+//         ],
+//     }
+//     res.render('./pages/templates/indexWithNavTemplate.pug', locals)
+// });
 
 server.listen(process.env.PORT)

@@ -2,7 +2,6 @@
     const MS_IN_SECOND = 1000;
     const SEDONDS_IN_MINUTE = 60;
     const MINUTES_IN_HOUR = 60;
-    const HUNDREDS_IN_MS = 10;
     const TICK = 15;
     
     const getArray = (size) => Array(size).fill(null).map(i => null)
@@ -18,7 +17,6 @@
         setPlaceholders = () => {
             StopWatch.placeholderSelectors.forEach(
                 ((selector, index) => {
-                    console.log('Selector', selector, this, index)
                     this.placeholders[index] = document.querySelector(selector)
                 }).bind(this)
             )
@@ -181,7 +179,6 @@
     
         setButtons() {
             StopWatchWithControls.controls.forEach(((selector, index) => {
-                console.log(this)
                 this.buttons[index] = document.querySelector(selector)
             }).bind(this))
         }
@@ -196,15 +193,11 @@
                 this.wrapWithHandlePaused.bind(this, this.run),
                 this.wrapWithHandlePaused.bind(this, this.pause),
                 this.wrapWithHandlePaused.bind(this, this.resume),
-                // this.pause.bind(this),
-                // this.resume.bind(this),
                 this.wrapWithHandlePaused.bind(this, this.stop),
                 this.wrapWithHandlePaused.bind(this, this.clear)
             ];
-            console.log(this)
             this.buttons.forEach((button, index) => {
                 button.addEventListener('click', actions[index])
-                // button.addEventListener('click', () => console.log(index, this, actions[index]))
             })
         }
     }

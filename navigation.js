@@ -1,5 +1,9 @@
 export const NAVIGATION = [
     {
+        caption: 'Home',
+        endpoint: '/'
+    },
+    {
         caption: 'Clock',
         endpoint: 'api/clock',
         scripts: [
@@ -22,7 +26,7 @@ export const NAVIGATION = [
     },
     {
         caption: 'Login',
-        endpoint: 'login'
+        endpoint: 'api/login'
     },
     {
         caption: 'Logout',

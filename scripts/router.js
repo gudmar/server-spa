@@ -20,42 +20,51 @@ const query = async(hashPath) => {
         
 }
 
-const getOnContentLoad = (renderer) => async (e) => {
-    console.log(e)
-    console.log(e.currentTarget.location.hash)
-    const endpoint = 'api/' + e.currentTarget.location.hash?.substr(1);
-    const scripts = DEPENDENCIES?.[endpoint]?.scripts || []
-    const styles = DEPENDENCIES?.[endpoint]?.styles || []
-    console.log(endpoint, scripts, styles)
-    await load({ endpoint, styles, scripts, renderer })
+const loadHashWithCleaner = async (renderer) => {
+    const reaper = new GrimReaper();
+    reaper.doHarvest();
+    loadHash(renderer);
 }
 
 const loadHash = async (renderer) => {
-    const endpoint = 'api/' + window.location.hash?.substring(1);
+    const hash = window.location.hash?.substring(1);
+    if (hash === '') {
+        await fetchLocation();
+        return
+    }
+    const endpoint = hash ? 'api/' + hash : '';
     const scripts = DEPENDENCIES?.[endpoint]?.scripts || []
     const styles = DEPENDENCIES?.[endpoint]?.styles || []
     await load({ endpoint, styles, scripts, renderer })
+}
+
+const fetchLocation = async() => {
+    console.log('Fetch location')
+    const res = await fetch(window.location)
+    console.log(res)
 }
 
 const router = async (renderer) => {
     console.log('Router launch')
-    window.onhashchange = getOnContentLoad(renderer)
-    await loadHash(renderer)
+    window.onhashchange = () => loadHashWithCleaner(renderer)//getOnContentLoad(renderer)
+    await loadHashWithCleaner(renderer)
 }
 
 const updateHash = (apiEntpoint) => {
     const notApiArr = apiEntpoint.split('/');
     notApiArr.splice(0, 1);
     const notApiPart = notApiArr.join('/');
-    window.location.hash = notApiPart;
+    if (notApiPart) {
+        window.location.hash = notApiPart
+    } else {
+        window.location.href = window.location.href.split('#')[0]
+    }
+    
 }
 
 const bind = () => {
     router(Renderer)
 }
-
-console.log(window.location)
-console.log(window.location.hash)
 
 window.onload = bind
 
