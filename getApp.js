@@ -1,6 +1,7 @@
 import { NAVIGATION } from "./navigation.js";
 
 export const getApp = async (req, res) => {
+    console.log('getApp launched')
         const locals = {
             title: 'SPA',
             navigations: NAVIGATION,

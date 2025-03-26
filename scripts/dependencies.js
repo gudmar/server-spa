@@ -15,5 +15,9 @@ const DEPENDENCIES = {
             'clock/clock.css',
             'stopWatch/stopWatch.css'
         ]
+    },
+    'api/login': {
+        scripts: [],
+        styles: []
     }
 }

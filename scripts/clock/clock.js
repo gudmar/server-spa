@@ -1,5 +1,6 @@
 
 (() => {
+    console.log('Starting clock')
     const getPlaceholders = () => {
         return {
             hoursPlaceholder: document.querySelector('.digital-clock-hours'),
