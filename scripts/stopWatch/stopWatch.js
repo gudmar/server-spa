@@ -14,8 +14,6 @@
             '.digital-clock-display-seconds',
             '.digital-clock-display-hundreds',
         ]
-    
-        // placeholders = [null, null, null, null]
             
         setPlaceholders = () => {
             StopWatch.placeholderSelectors.forEach(

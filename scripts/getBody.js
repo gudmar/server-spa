@@ -1,5 +1,4 @@
 const getBody = async (response) => {
-    // if (response.redirected) window.location = response.url
     console.log(response)
     const reader = response.body.getReader()
     let result = ''

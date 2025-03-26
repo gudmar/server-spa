@@ -31,20 +31,18 @@
     const toZeroPrefixedString = (val) => `${val}`.padStart(2, '0')
     
     const updateTime = () => {
-        // try {
-            const {
-                hoursPlaceholder, minutesPlaceholder, secondsPlaceholder
-            } = getPlaceholders();
-            const {
-                displayedHours, displayedMinutes, displayedSeconds
-            } = getCurrentlyDisplayedTime();
-            const {
-                hours, minutes, seconds
-            } = getCurrentTime();
-            if (hours !== displayedHours) hoursPlaceholder.innerText =       toZeroPrefixedString(hours);
-            if (minutes !== displayedMinutes) minutesPlaceholder.innerText = toZeroPrefixedString(minutes);
-            if (seconds !== displayedSeconds) secondsPlaceholder.innerText = toZeroPrefixedString(seconds);
-        // } catch {}
+        const {
+            hoursPlaceholder, minutesPlaceholder, secondsPlaceholder
+        } = getPlaceholders();
+        const {
+            displayedHours, displayedMinutes, displayedSeconds
+        } = getCurrentlyDisplayedTime();
+        const {
+            hours, minutes, seconds
+        } = getCurrentTime();
+        if (hours !== displayedHours) hoursPlaceholder.innerText =       toZeroPrefixedString(hours);
+        if (minutes !== displayedMinutes) minutesPlaceholder.innerText = toZeroPrefixedString(minutes);
+        if (seconds !== displayedSeconds) secondsPlaceholder.innerText = toZeroPrefixedString(seconds);
     }
     
     const startClock = () => {
@@ -52,8 +50,5 @@
         const reaper = new GrimReaper();
         reaper.addToBookOfDeath(() => clearInterval(interval))
     }
-    startClock();
-    // startClock();
-    // window.onload = startClock
-    
+    startClock();    
 })()

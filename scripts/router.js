@@ -20,12 +20,27 @@ const query = async(hashPath) => {
         
 }
 
-const router = () => {
+const getOnContentLoad = (renderer) => async (e) => {
+    console.log(e)
+    console.log(e.currentTarget.location.hash)
+    const endpoint = 'api/' + e.currentTarget.location.hash?.substr(1);
+    const scripts = DEPENDENCIES?.[endpoint]?.scripts || []
+    const styles = DEPENDENCIES?.[endpoint]?.styles || []
+    console.log(endpoint, scripts, styles)
+    await load({ endpoint, styles, scripts, renderer })
+}
+
+const loadHash = async (renderer) => {
+    const endpoint = 'api/' + window.location.hash?.substring(1);
+    const scripts = DEPENDENCIES?.[endpoint]?.scripts || []
+    const styles = DEPENDENCIES?.[endpoint]?.styles || []
+    await load({ endpoint, styles, scripts, renderer })
+}
+
+const router = async (renderer) => {
     console.log('Router launch')
-    window.onhashchange = (e) => {
-        console.log(e)
-        console.log(e.currentTarget.location.hash)
-    }
+    window.onhashchange = getOnContentLoad(renderer)
+    await loadHash(renderer)
 }
 
 const updateHash = (apiEntpoint) => {
@@ -36,7 +51,7 @@ const updateHash = (apiEntpoint) => {
 }
 
 const bind = () => {
-    router()
+    router(Renderer)
 }
 
 console.log(window.location)
