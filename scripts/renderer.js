@@ -9,7 +9,6 @@ class Renderer {
     static domParser = new DOMParser();
 
     static replaceContent(html, endpoint) {
-        // const element = Renderer.htmlStringToElement(html);
         const selector = LOCATIONS[endpoint];
         const location = document.querySelector(selector);
         location.innerHTML = html;

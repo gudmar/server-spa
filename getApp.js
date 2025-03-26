@@ -5,6 +5,7 @@ export const getApp = async (req, res) => {
             title: 'SPA',
             navigations: NAVIGATION,
             scripts: [
+                'dependencies.js',
                 'grimReaper.js',
                 'renderer.js',
                 'load.js',
