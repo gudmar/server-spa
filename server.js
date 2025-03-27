@@ -3,24 +3,27 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import { getError } from './getError.js';
 import { compileFile } from 'pug'
-import { NAVIGATION } from "./navigation.js";
 import pug from 'pug'
 import { getApp } from "./getApp.js";
+import { body, validationResult } from 'express-validator'
+import { checkUser } from "./DataStorage/checkUser.js";
 
 dotenv.config({path: '.env'})
 
 const server = express();
 server.set('view engine', 'pug');
 server.set('views', './')
+server.use(express.static('styles'));
+server.use(express.static('scripts'));
+server.use(express.static('public'));
+server.use(bodyParser.raw());
+server.use(bodyParser.json());
+
 server.use((req,res,next) => {
     console.log(req.method, req.path)
     return next()
 })
-server.use(bodyParser.json());
-server.use(bodyParser.raw());
-server.use(express.static('styles'));
-server.use(express.static('scripts'));
-server.use(express.static('public'));
+
 
 server.get('/api/clock', async (req, res) => {
     const time = new Date(Date.now())
@@ -49,6 +52,19 @@ server.get('/api/login', async (req, res) => {
     console.log(html)
     res.send(html)
 })
+
+server.post(
+    '/api/login',
+    body('login').isString(),
+    body('password').isString(),
+    async(req, res) => {
+        console.log('POST login body', req.body)
+        const errors = validationResult(req).array();
+        if (errors.length) res.status('').send()
+        const {login, password} = req.body;
+        const { result, message, jwtData } = await checkUser(login, password)
+        return res.send({result, message, jwtData})
+    })
 
 server.get('/', getApp );
 

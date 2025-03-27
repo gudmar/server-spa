@@ -1,0 +1,30 @@
+.login-form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.login-input-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.login-input-container>input {
+    border-radius: 0.5rem;
+    outline: none;
+    padding: 0.5rem;
+    font-size: 1.3rem;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.login-keypad-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.forms-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}

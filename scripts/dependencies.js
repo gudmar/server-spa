@@ -17,7 +17,7 @@ const DEPENDENCIES = {
         ]
     },
     'api/login': {
-        scripts: [],
-        styles: []
+        scripts: ['auth/login.js'],
+        styles: ['auth/login.css']
     }
 }

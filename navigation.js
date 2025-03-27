@@ -26,7 +26,13 @@ export const NAVIGATION = [
     },
     {
         caption: 'Login',
-        endpoint: 'api/login'
+        endpoint: 'api/login',
+        scripts: [
+            'auth/login.js',
+        ],
+        styles: [
+            'auth/login.css'
+        ]
     },
     {
         caption: 'Logout',
