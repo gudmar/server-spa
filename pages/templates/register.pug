@@ -1,6 +1,7 @@
 include ../mixins/button.pug
 
 div(class='login-credentials-wrapper forms-wrapper')
+    h2 Register user
     form(class='forms-container')
         .login-form-fields
             div(class='login-input-container forms-field')
@@ -9,9 +10,15 @@ div(class='login-credentials-wrapper forms-wrapper')
             div(class='login-input-container forms-field')
                 label(for='login-password') Passowrd
                 input(type='password' id='login-password' autocomplete='password')
+            div(class='login-input-container forms-field')
+                label(for='login-password') Passowrd
+                input(type='password' id='login-password' autocomplete='password')
+            div(class='login-input-container forms-field')
+                label(for='login-password') Passowrd
+                input(type='password' id='login-password' autocomplete='password')
+
         div(class='login-user-info' id='login-user-information')
         div(class='login-keypad-container forms-keypad')
-            +button('Login', ['login-login'])
             +button('Register', ['login-register'])
 
     script
