@@ -19,5 +19,10 @@ const DEPENDENCIES = {
     'api/login': {
         scripts: ['auth/login.js'],
         styles: ['auth/login.css']
-    }
+    },
+    'api/register': {
+        scripts: ['auth/register.js'],
+        styles: ['auth/login.css']
+    },
+
 }

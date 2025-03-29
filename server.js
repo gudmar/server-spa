@@ -7,6 +7,7 @@ import pug from 'pug'
 import { getApp } from "./getApp.js";
 import { body, validationResult } from 'express-validator'
 import { checkUser } from "./DataStorage/checkUser.js";
+import { rejesterUser } from "./DataStorage/saveUser.js";
 
 dotenv.config({path: '.env'})
 
@@ -53,6 +54,20 @@ server.get('/api/login', async (req, res) => {
     res.send(html)
 })
 
+server.post('/api/register', async(req, res) => {
+    const {login, password, firstName, familyName} = req.body
+    const registerStatus = await rejesterUser({
+        name: firstName, nickName: login, password, 
+    })
+    return res.send(registerStatus);
+})
+
+server.get('/api/register', async (req, res) => {
+    const html = await compileFile('./pages/templates/register.pug')()
+    console.log(html)
+    res.send(html)
+})
+
 server.post(
     '/api/login',
     body('login').isString(),
@@ -78,25 +93,5 @@ server.get('logout', (req, res) => {
 
 server.get('*', getError)
 
-// server.get('/', (req, res) => {
-//     const locals = {
-//         title: 'SPA',
-//         navigations: NAVIGATION,
-//         scripts: [
-//             'grimReaper.js',
-//             'renderer.js',
-//             'load.js',
-//             'getBody.js',
-//             'utils.js',
-//             'router.js',
-//             // 'navigations.js'
-//         ],
-//         styles: [
-//             'main.css',
-//             'navigations.css'
-//         ],
-//     }
-//     res.render('./pages/templates/indexWithNavTemplate.pug', locals)
-// });
 
 server.listen(process.env.PORT)

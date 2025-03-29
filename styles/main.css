@@ -61,3 +61,6 @@
     cursor: default;
 }
 
+.error {
+    color: red;
+}
