@@ -2,6 +2,7 @@ const LOCATIONS = {
     'api/clock': '#content',
     'api/login': '#content',
     'api/stop-watch': '#content',
+    'api/register': '#content'
 }
 
 class Renderer {

@@ -32,7 +32,6 @@
         constructor() {
             this.setControls();
             this.setInitialCredentials();
-            this.bindActions();
         }
 
         setInitialCredentials() {
@@ -82,11 +81,6 @@
             window.location.hash = 'register'
         }
 
-        bindActions() {
-            // console.log(this.controlsMap, this.loginButton)
-            // this.controlsMap.registerButton.element.addEventListener('click', this.register)
-            // this.loginButton.addEventListener('click', this.login)
-        }
     }
 
     new LoginForm();

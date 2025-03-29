@@ -1,7 +1,7 @@
-import { getStoragePath, USERS } from "./dataStorageNames";
-import { add } from './dbInterface';
-import { hashPassword } from './hashPassword';
-import { getUserByLogin }  from './utils';
+import { getStoragePath, USERS } from "./dataStorageNames.js";
+import { add } from './dbInterface.js';
+import { hashPassword } from './hashPassword.js';
+import { getUserByLogin }  from './utils.js';
 
 export const rejesterUser = async ({ name, nickName, password }) => {
     try {

@@ -5,21 +5,21 @@ div(class='login-credentials-wrapper forms-wrapper')
     form(class='forms-container')
         .login-form-fields
             div(class='login-input-container forms-field')
-                label(for='login-nick-name') Login
-                input(type='text' id='login-nick-name')
+                label(for='register-nick-name') Login
+                input(type='text' id='register-nick-name')
             div(class='login-input-container forms-field')
-                label(for='login-password') Passowrd
-                input(type='password' id='login-password' autocomplete='password')
+                label(for='register-password') Passowrd
+                input(type='password' id='register-password' autocomplete='password')
             div(class='login-input-container forms-field')
-                label(for='login-password') Passowrd
-                input(type='password' id='login-password' autocomplete='password')
+                label(for='register-first-name') First name
+                input(type='text' id='register-first-name')
             div(class='login-input-container forms-field')
-                label(for='login-password') Passowrd
-                input(type='password' id='login-password' autocomplete='password')
+                label(for='register-family-name') Family name
+                input(type='password' id='register-family-name' autocomplete='password')
 
-        div(class='login-user-info' id='login-user-information')
         div(class='login-keypad-container forms-keypad')
-            +button('Register', ['login-register'])
+            +button('Register', ['register-register'])
+        ul(class='register-message' id='register-message')
 
     script
         console.log('login')
