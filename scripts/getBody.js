@@ -13,3 +13,5 @@ const getBody = async (response) => {
     });
     return result
 }
+
+const getParsedBody = async(response) => getBody(response).then((b) => JSON.parse(b))
