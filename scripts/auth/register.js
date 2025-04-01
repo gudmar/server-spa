@@ -13,12 +13,15 @@
     }
 
     const areAllCapitals = (str) => str.split('').every(isCapitalLetter);
+    const areAllNotCapitals = (str) => str.split('').every((char) => !isCapitalLetter(char));
 
     const isOnlyFirstCapital = (str) => {
         if (!str.length) return false;
         const first = str[0];
         const rest = str.substring(1);
-        return isCapitalLetter(first) && areAllCapitals(rest)
+        const isFirstCapital = isCapitalLetter(first)
+        const isTailNotCapital = areAllNotCapitals(rest)
+        return isFirstCapital && isTailNotCapital
     }
 
     const NO_EVENT = '';
@@ -136,9 +139,12 @@
         }
 
         showValidationErrors(errors) {
-            // throw new Error('Implement this function')
             const uniqueErrors = this.getUniqueErrors(errors)
             this.controlsMap.messagePlaceholder.element.innerHTML = uniqueErrors.map((error) => `<li class="error">${error}</li>`).join('');
+        }
+
+        showValidationSuccess(message) {
+            this.controlsMap.messagePlaceholder.element.innerHTML = '<div class="success">Registered succesfully</div>'
         }
 
         async register() {
@@ -156,14 +162,21 @@
                 this.showValidationErrors(validationErrors)
             } else {
                 const body = JSON.stringify({ login, password, firstName, familyName })
-                console.log(login, password, body)
                 const res = await fetch(getUrl('api/register'), {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },        
                     body
-                })    
+                })
+                const reply = await getParsedBody(res);
+                console.log(reply)
+                const {result, message} = reply
+                if (result) {
+                    this.showValidationSuccess();
+                } else {
+                    this.showValidationErrors([message])
+                }
             }
         }
     }

@@ -5,9 +5,10 @@ import { getError } from './getError.js';
 import { compileFile } from 'pug'
 import pug from 'pug'
 import { getApp } from "./getApp.js";
-import { body, validationResult } from 'express-validator'
-import { checkUser } from "./DataStorage/checkUser.js";
+import { body } from 'express-validator'
 import { rejesterUser } from "./DataStorage/saveUser.js";
+import { login } from "./controllers/login.js";
+import { markAuthentication } from "./Middleware/markAuthentication.js";
 
 dotenv.config({path: '.env'})
 
@@ -17,6 +18,7 @@ server.set('views', './')
 server.use(express.static('styles'));
 server.use(express.static('scripts'));
 server.use(express.static('public'));
+server.use(markAuthentication);
 server.use(bodyParser.raw());
 server.use(bodyParser.json());
 
@@ -72,14 +74,8 @@ server.post(
     '/api/login',
     body('login').isString(),
     body('password').isString(),
-    async(req, res) => {
-        console.log('POST login body', req.body)
-        const errors = validationResult(req).array();
-        if (errors.length) res.status('').send()
-        const {login, password} = req.body;
-        const { result, message, jwtData } = await checkUser(login, password)
-        return res.send({result, message, jwtData})
-    })
+    login,
+)
 
 server.get('/', getApp );
 
